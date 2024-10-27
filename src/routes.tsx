@@ -1,37 +1,37 @@
-import { createBrowserRouter, RouteObject } from 'react-router-dom';
-import { lazy } from 'react';
+import { createBrowserRouter, RouteObject } from 'react-router-dom'
+import { lazy } from 'react'
 
 // Layouts
-import RootLayout from './layouts/RootLayout';
-import AdminLayout from './layouts/AdminLayout';
+import RootLayout from './layouts/RootLayout'
+import AdminLayout from './layouts/AdminLayout'
 
 // Pages
-const HomePage = lazy(() => import('./pages/Home'));
-// const PostPage = lazy(() => import('@/pages/Post'));
-const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'));
+const HomePage = lazy(() => import('./pages/Home'))
+const PostPage = lazy(() => import('@/pages/Post'))
+const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'))
 // const PostEditor = lazy(() => import('@/pages/admin/PostEditor'));
-const NotFound = lazy(() => import('./pages/NotFound'));
+const NotFound = lazy(() => import('./pages/NotFound'))
 
 export const routes: RouteObject[] = [
   {
     path: '/',
-    element: <RootLayout />,
+    element: <RootLayout/>,
     children: [
       {
         index: true,
-        element: <HomePage />
+        element: <HomePage/>
       },
-      // {
-      //   path: 'post/:slug',
-      //   element: <PostPage />
-      // },
+      {
+        path: 'post/:slug',
+        element: <PostPage/>
+      },
       {
         path: 'admin',
-        element: <AdminLayout />,
+        element: <AdminLayout/>,
         children: [
           {
             index: true,
-            element: <AdminDashboard />
+            element: <AdminDashboard/>
           },
           // {
           //   path: 'posts/new',
@@ -45,10 +45,10 @@ export const routes: RouteObject[] = [
       },
       {
         path: '*',
-        element: <NotFound />
+        element: <NotFound/>
       }
     ]
   }
-];
+]
 
-export const router = createBrowserRouter(routes);
+export const router = createBrowserRouter(routes)

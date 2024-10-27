@@ -1,44 +1,14 @@
 import { Link } from 'react-router-dom'
-
-type Post = {
-  id: string;
-  title: string;
-  slug: string;
-  description: string;
-  status: 'draft' | 'published';
-}
+import { useQuery } from '@tanstack/react-query'
+import { getBlogPosts } from '@/utils/api'
+import { Post } from '@/utils/types'
 
 function Home() {
-  const posts: Post[] = [
-    {
-      id: '1',
-      title: 'Promises From The Ground Up',
-      description: `The "Promises" API is a surprisingly tricky part of modern JavaScript. Without the right context, it doesn't make much sense at all! In this tutorial, you'll build an intuition for how Promises work by getting a deeper understanding of JavaScript and its limitations.`,
-      slug: 'promises-in-detail',
-      status: 'published'
-    },
-    {
-      id: '2',
-      title: 'Statements Vs. Expressions',
-      description: 'One of the most foundational things to understand about JavaScript is that programs are made up of statements, and statements have slots for expressions. In this blog post, we\'ll dig into how these two structures work, and see how building an intuition about this can help us solve practical problems.',
-      slug: 'what-is-react',
-      status: 'published'
-    },
-    {
-      id: '3',
-      title: 'What is React?',
-      description: 'We are breaking down deeply in react.',
-      slug: 'what-is-react',
-      status: 'published'
-    },
-    {
-      id: '4',
-      title: 'What is React?',
-      description: 'We are breaking down deeply in react.',
-      slug: 'what-is-react',
-      status: 'published'
-    },
-  ]
+
+  const { data, isLoading, isError } = useQuery<Post[]>({
+    queryKey: ['getBlogPosts'],
+    queryFn: getBlogPosts
+  })
 
   return (
     <div className="min-h-screen text-white">
@@ -46,12 +16,19 @@ function Home() {
         {/* Header */}
         <div className="flex justify-between items-center py-12 px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold">React</h1>
-          <span className="text-gray-400">{posts.length} Articles</span>
+          {data && <span className="text-gray-400">{data.length} Articles</span>}
+        </div>
+
+        <div className="flex justify-center items-center">
+          {isLoading && <div
+              className="text-4xl font-bold bg-gradient-to-r from-gray-800 to-sky-600 bg-clip-text text-transparent">
+              Loading...
+          </div>}
         </div>
 
         {/* Blog Grid - padding'i buradan kaldırdık */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {posts.map((post) => (
+        {data && <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {data.map((post: Post) => (
             <div key={post.id} className="w-full px-4 sm:px-6 lg:px-8">
               <article
                 className="p-6 rounded-lg bg-gray-900 border border-gray-800 h-full transition-all duration-300 hover:border-gray-700">
@@ -81,7 +58,7 @@ function Home() {
               </article>
             </div>
           ))}
-        </div>
+        </div>}
       </div>
     </div>
   )
