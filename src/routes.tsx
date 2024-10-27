@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouteObject } from 'react-router-dom'
+import { createBrowserRouter, RouteObject, ScrollRestoration } from 'react-router-dom'
 import { lazy } from 'react'
 
 // Layouts
@@ -15,7 +15,10 @@ const NotFound = lazy(() => import('./pages/NotFound'))
 export const routes: RouteObject[] = [
   {
     path: '/',
-    element: <RootLayout/>,
+    element: <>
+      <RootLayout/>
+      <ScrollRestoration/>
+    </>,
     children: [
       {
         index: true,
