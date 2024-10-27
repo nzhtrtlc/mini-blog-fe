@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { getBlogPosts } from '@/utils/api'
 import { Post } from '@/utils/types'
+import { MultiplePostLoading } from '@/components/SkeletonLoader'
 
 function Home() {
 
@@ -13,20 +14,13 @@ function Home() {
   return (
     <div className="min-h-screen text-white">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <div className="flex justify-between items-center py-12 px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold">React</h1>
           {data && <span className="text-gray-400">{data.length} Articles</span>}
         </div>
 
-        <div className="flex justify-center items-center">
-          {isLoading && <div
-              className="text-4xl font-bold bg-gradient-to-r from-gray-800 to-sky-600 bg-clip-text text-transparent">
-              Loading...
-          </div>}
-        </div>
+        {isLoading && <MultiplePostLoading rows={4}/>}
 
-        {/* Blog Grid - padding'i buradan kaldırdık */}
         {data && <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {data.map((post: Post) => (
             <div key={post.id} className="w-full px-4 sm:px-6 lg:px-8">

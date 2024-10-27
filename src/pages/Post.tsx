@@ -2,6 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '@/utils/apiClient'
 import { Post } from '@/utils/types'
+import { SinglePostLoading } from '@/components/SkeletonLoader'
 
 function PostPage() {
   const { slug } = useParams<{ slug: string }>()
@@ -15,18 +16,7 @@ function PostPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen">
-        <div className="max-w-3xl mx-auto px-4 py-8">
-          <div className="animate-pulse">
-            <div className="h-8 bg-gray-700 rounded w-3/4 mb-8"></div>
-            <div className="space-y-4">
-              <div className="h-4 bg-gray-700 rounded w-full"></div>
-              <div className="h-4 bg-gray-700 rounded w-5/6"></div>
-              <div className="h-4 bg-gray-700 rounded w-4/6"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <SinglePostLoading/>
     )
   }
 
