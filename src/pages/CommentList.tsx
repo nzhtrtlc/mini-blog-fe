@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { getComments } from '@/utils/api'
 import { Comment } from '@/utils/types'
+import { useRealtimeComments } from '@/hooks/useRealtimeComments'
 
 
 export const CommentList = ({ postId }: { postId: string }) => {
@@ -8,6 +9,10 @@ export const CommentList = ({ postId }: { postId: string }) => {
     queryKey: ['comments', postId],
     queryFn: () => getComments(postId)
   })
+
+  useRealtimeComments(postId)
+
+  console.log('Current comments:', comments);
 
   if (isLoading) {
     return (
@@ -30,7 +35,7 @@ export const CommentList = ({ postId }: { postId: string }) => {
     )
   }
 
-  if (!comments) {
+  if (!comments?.length) {
     return (
       <div className="text-gray-400">
         No comments yet. Be the first to comment!
