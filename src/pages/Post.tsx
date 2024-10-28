@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query'
 import { api } from '@/utils/apiClient'
 import { Post } from '@/utils/types'
 import { SinglePostLoading } from '@/components/SkeletonLoader'
+import { CommentForm } from './CommentForm'
+import { CommentList } from './CommentList'
 
 function PostPage() {
   const { slug } = useParams<{ slug: string }>()
@@ -87,6 +89,14 @@ function PostPage() {
 
         <div className="prose prose-invert prose-lg max-w-none">
           {post.content}
+        </div>
+
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold mb-8">Comments</h2>
+          <div className="space-y-8">
+            <CommentList postId={post.id} />
+            <CommentForm postId={post.id}/>
+          </div>
         </div>
       </article>
     </div>

@@ -6,7 +6,7 @@ import { MultiplePostLoading } from '@/components/SkeletonLoader'
 
 function Home() {
 
-  const { data, isLoading, isError } = useQuery<Post[]>({
+  const { data: blogPosts, isLoading } = useQuery<Post[]>({
     queryKey: ['getBlogPosts'],
     queryFn: getBlogPosts
   })
@@ -16,13 +16,13 @@ function Home() {
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center py-12 px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold">React</h1>
-          {data && <span className="text-gray-400">{data.length} Articles</span>}
+          {blogPosts && <span className="text-gray-400">{blogPosts.length} Articles</span>}
         </div>
 
         {isLoading && <MultiplePostLoading rows={4}/>}
 
-        {data && <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {data.map((post: Post) => (
+        {blogPosts && <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {blogPosts.map((post: Post) => (
             <div key={post.id} className="w-full px-4 sm:px-6 lg:px-8">
               <article
                 className="p-6 rounded-lg bg-gray-900 border border-gray-800 h-full transition-all duration-300 hover:border-gray-700">

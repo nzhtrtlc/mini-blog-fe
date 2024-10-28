@@ -1,19 +1,19 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 type RequestConfig = RequestInit & {
   data?: object;
-}
+};
 
 async function request<T>(
   endpoint: string,
   { data, ...customConfig }: { data?: object } & RequestConfig = {}
 ): Promise<T> {
   const config: RequestConfig = {
-    method: data ? 'POST' : 'GET',
+    method: data ? "POST" : "GET",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
-    ...customConfig
+    ...customConfig,
   };
 
   if (data) {
@@ -32,20 +32,19 @@ async function request<T>(
     if (error instanceof Error) {
       throw new Error(`API Error: ${error.message}`);
     }
-    throw new Error('API Error occurred');
+    throw new Error("API Error occurred");
   }
 }
 
 export const api = {
   get: <T>(endpoint: string, config = {}) =>
-    request<T>(endpoint, { ...config, method: 'GET' }),
+    request<T>(endpoint, { ...config, method: "GET" }),
 
   post: <T>(endpoint: string, data: object) =>
-    request<T>(endpoint, { data, method: 'POST' }),
+    request<T>(endpoint, { data, method: "POST" }),
 
   put: <T>(endpoint: string, data: object) =>
-    request<T>(endpoint, { data, method: 'PUT' }),
+    request<T>(endpoint, { data, method: "PUT" }),
 
-  delete: <T>(endpoint: string) =>
-    request<T>(endpoint, { method: 'DELETE' })
+  delete: <T>(endpoint: string) => request<T>(endpoint, { method: "DELETE" }),
 };
