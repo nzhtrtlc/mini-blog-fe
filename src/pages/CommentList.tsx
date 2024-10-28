@@ -12,8 +12,6 @@ export const CommentList = ({ postId }: { postId: string }) => {
 
   useRealtimeComments(postId)
 
-  console.log('Current comments:', comments);
-
   if (isLoading) {
     return (
       <div className="space-y-4 animate-pulse">
